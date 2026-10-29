@@ -1,22 +1,34 @@
-import { Page, Locator, expect } from '@playwright/test';
+import type { Page, Response } from '@playwright/test';
+import { NavbarComponent } from '@components/navbar.component';
+import { FooterComponent } from '@components/footer.component';
 
+/**
+ * Base for LaunchPad pages. Every route is prefixed with a locale (/en/..., /fr/...).
+ *
+ * Conventions:
+ * - Locators are readonly properties built once in the constructor, or small factory methods
+ *   when they depend on CMS data (a slug, a label).
+ * - Actions do not assert. Specs decide what to verify.
+ * - `open()` returns the navigation response so specs can check HTTP status (404s, redirects).
+ */
 export abstract class BasePage {
-  protected readonly page: Page;
+  readonly navbar: NavbarComponent;
+  readonly footer: FooterComponent;
 
-  constructor(page: Page) {
-    this.page = page;
+  constructor(protected readonly page: Page) {
+    this.navbar = new NavbarComponent(page);
+    this.footer = new FooterComponent(page);
   }
 
-  protected byTestId(id: string): Locator {
-    return this.page.getByTestId(id);
+  protected async visit(locale: string, path = ''): Promise<Response | null> {
+    return this.page.goto(`/${locale}${path}`);
   }
 
-  async goto(path: string) {
-    const baseUrl = process.env.BASE_URL ?? 'http://localhost:3000';
-    await this.page.goto(`${baseUrl}${path}`);
+  metaDescription() {
+    return this.page.locator('meta[name="description"]');
   }
 
-  async expectUrlContains(fragment: string | RegExp) {
-    await expect(this.page).toHaveURL(new RegExp(fragment));
+  htmlRoot() {
+    return this.page.locator('html');
   }
 }

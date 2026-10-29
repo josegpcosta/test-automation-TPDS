@@ -1,22 +1,29 @@
 {
-    "compilerOptions": {
-      "target": "ES2021",
-      "module": "commonjs",
-      "moduleResolution": "node",
-      "allowJs": false,
-      "strict": true,
-      "esModuleInterop": true,
-      "resolveJsonModule": true,
-      "types": ["node", "@playwright/test"],
-      "rootDir": "./",
-      "baseUrl": ".",
-      "paths": {
-        "@pages/*": ["src/pages/*"],
-        "@components/*": ["src/components/*"],
-        "@fixtures/*": ["tests/fixtures/*"],
-        "@utils/*": ["src/utils/*"]
-      }
-    },
-    "include": ["src/**/*.ts", "tests/**/*.ts", "playwright.config.ts", "fixtures.ts"]
-  }
-  
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["ES2022", "DOM"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@api/*": ["src/api/*"],
+      "@components/*": ["src/components/*"],
+      "@config/*": ["src/config/*"],
+      "@data/*": ["src/data/*"],
+      "@fixtures": ["src/fixtures/index.ts"],
+      "@pages/*": ["src/pages/*"],
+      "@schemas/*": ["src/schemas/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "tests/**/*.ts", "playwright.config.ts"]
+}

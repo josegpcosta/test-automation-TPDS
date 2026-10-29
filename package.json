@@ -1,33 +1,45 @@
 {
   "name": "test-automation-tpds",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "3.0.0",
+  "description": "Playwright test automation for Strapi LaunchPad (Strapi 5 CMS + Next.js website)",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "test": "playwright test",
-    "test:ui": "playwright test tests/ui",
-    "test:e2e": "playwright test tests/e2e",
-    "test:perf": "playwright test tests/stress"
+    "test:api": "playwright test --project=api",
+    "test:e2e": "playwright test --project=chromium",
+    "test:cross-browser": "playwright test --project=chromium --project=firefox --project=webkit",
+    "test:smoke": "playwright test --project=api --project=chromium --grep @smoke",
+    "test:security": "playwright test --grep @security",
+    "test:i18n": "playwright test --grep @i18n",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run typecheck && npm run lint && npm run format:check"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/turn0ver/test-automation-TPDS.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/turn0ver/test-automation-TPDS/issues"
-  },
-  "homepage": "https://github.com/turn0ver/test-automation-TPDS#readme",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@playwright/test": "^1.56.1",
     "@types/node": "^24.10.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
-    "dotenv": "^17.2.3"
+    "@types/qs": "^6.14.0",
+    "dotenv": "^17.2.3",
+    "eslint": "^10.13.0",
+    "eslint-plugin-playwright": "^2.12.1",
+    "prettier": "^3.6.2",
+    "qs": "^6.14.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.1",
+    "zod": "^4.1.0"
   }
 }

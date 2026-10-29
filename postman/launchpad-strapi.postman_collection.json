@@ -1,0 +1,426 @@
+{
+  "info": {
+    "name": "LaunchPad - Strapi 5 Content API",
+    "description": "Calls the LaunchPad website makes, plus security probes. Set strapi_url to http://localhost:1337 or https://api-<id>.strapidemo.com.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Website reads (Public role)",
+      "item": [
+        {
+          "name": "Global (navbar, footer, UI strings)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/global?locale={{locale}}",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "global"],
+              "query": [
+                {
+                  "key": "locale",
+                  "value": "{{locale}}"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('200', () => pm.response.to.have.status(200));"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/products?locale={{locale}}",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "products"],
+              "query": [
+                {
+                  "key": "locale",
+                  "value": "{{locale}}"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('200', () => pm.response.to.have.status(200));"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Product by slug",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/products?locale={{locale}}&filters[slug][$eq]={{product_slug}}",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "products"],
+              "query": [
+                {
+                  "key": "locale",
+                  "value": "{{locale}}"
+                },
+                {
+                  "key": "filters[slug][$eq]",
+                  "value": "{{product_slug}}"
+                }
+              ]
+            },
+            "description": "How products/[slug]/page.tsx loads a product."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('200', () => pm.response.to.have.status(200));"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Articles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/articles?locale={{locale}}",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "articles"],
+              "query": [
+                {
+                  "key": "locale",
+                  "value": "{{locale}}"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('200', () => pm.response.to.have.status(200));"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Homepage",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/pages?locale={{locale}}&filters[slug][$eq]=homepage",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "pages"],
+              "query": [
+                {
+                  "key": "locale",
+                  "value": "{{locale}}"
+                },
+                {
+                  "key": "filters[slug][$eq]",
+                  "value": "homepage"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('200', () => pm.response.to.have.status(200));"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Redirections",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/redirections",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "redirections"]
+            },
+            "description": "Read once by next.config.mjs at build/start."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('200', () => pm.response.to.have.status(200));"]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Security probes",
+      "item": [
+        {
+          "name": "Drafts via status=draft (should be empty)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/articles?status=draft&locale={{locale}}",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "articles"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "draft"
+                },
+                {
+                  "key": "locale",
+                  "value": "{{locale}}"
+                }
+              ]
+            },
+            "description": "Known defect: Strapi 5 returns draft versions to the Public role."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const data = pm.response.json().data || [];",
+                  "pm.test('no draft versions for the Public role', () => pm.expect(data.filter(d => d.publishedAt === null)).to.have.length(0));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Public write (should be 403)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/articles",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "articles"]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"title\": \"probe\"\n  }\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('403', () => pm.response.to.have.status(403));"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Public sign-up (should be 400/403)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/auth/local/register",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "auth", "local", "register"]
+            },
+            "description": "Known defect: open by default. Delete any user it creates.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"probe_{{$timestamp}}\",\n  \"email\": \"probe_{{$timestamp}}@e2e.test\",\n  \"password\": \"Pw_probe_123!\"\n}"
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('closed', () => pm.expect([400, 403]).to.include(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Media library (should be 403)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/upload/files",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "upload", "files"]
+            },
+            "description": ""
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('403', () => pm.response.to.have.status(403));"]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Admin token",
+      "item": [
+        {
+          "name": "Create draft article",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{strapi_url}}/api/articles?status=draft&locale={{locale}}",
+              "host": ["{{strapi_url}}"],
+              "path": ["api", "articles"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "draft"
+                },
+                {
+                  "key": "locale",
+                  "value": "{{locale}}"
+                }
+              ]
+            },
+            "description": "Strapi 5 REST publishes on create unless status=draft is sent.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"title\": \"E2E manual\",\n    \"description\": \"Safe to delete\",\n    \"slug\": \"e2e-manual-{{$timestamp}}\"\n  }\n}"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{api_token}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "strapi_url",
+      "value": "http://localhost:1337"
+    },
+    {
+      "key": "locale",
+      "value": "en"
+    },
+    {
+      "key": "product_slug",
+      "value": "content-rocket-booster"
+    },
+    {
+      "key": "api_token",
+      "value": ""
+    }
+  ]
+}
